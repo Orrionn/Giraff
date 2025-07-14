@@ -156,24 +156,23 @@ python -m app.app
 
 Переходим на сайт http://127.0.0.1:5000
 
-![](
+![](https://github.com/Orrionn/Giraff/blob/main/сервер.png?raw=true)
 
 Начинаем учет жирафов
 
-![](
+![](https://github.com/Orrionn/Giraff/blob/main/2%20жирафа.png?raw=true)
 
 И видим, что ИИ определил что на фото 2 жирафа.
 
-![](
+![](https://github.com/Orrionn/Giraff/blob/main/результат%202-х%20жирафов.png?raw=true)
 
 Проверим распознавание других животных
 
 ![](
 
+Результат показал что на фото 1 собака и 1 жираф.
 
-
-
-
+![](https://github.com/Orrionn/Giraff/blob/main/результат%201%20собака%20и%201%20жираф.png?raw=true)
 
 
 
