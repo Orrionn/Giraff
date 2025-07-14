@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>YOLOv8 Жираф-детектор</title>
+  <style>
+    body { font-family: Arial; margin: 40px; }
+    #canvas { border: 1px solid #ccc; max-width: 100%; }
+  </style>
+</head>
+<body>
+
+  <h2>Загрузите изображение</h2>
+  <input type="file" id="fileInput" accept="image/*">
+  <button onclick="processImage()">Обработать</button>
+
+  <p id="stat"></p>
+  <canvas id="canvas"></canvas>
+
+  <script src="https://docs.opencv.org/4.x/opencv.js"></script>
+  <script>
+    let img = new Image();
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    async function processImage() {
+      const file = document.getElementById('fileInput').files[0];
+      if (!file) { alert("Выберите файл"); return; }
+
+      const form = new FormData();
+      form.append('image', file);
+
+      const res = await fetch('/detect', { method: 'POST', body: form });
+      const data = await res.json();
+
+      const resultImg = new Image();
+      resultImg.onload = () => {
+        canvas.width = resultImg.width;
+        canvas.height = resultImg.height;
+        ctx.drawImage(resultImg, 0, 0);
+        document.getElementById('stat').innerText = `Найдено жирафов: ${data.count}`;
+      };
+      resultImg.src = '/static/result.jpg?' + Date.now();
+    }
+  </script>
+</body>
+</html>
